@@ -1,0 +1,83 @@
+Write a function that takes ina string and returns its longest substring without duplication
+
+function longestSubstringWithoutDuplication(string){
+  let mainP = 0
+  let result = ""
+  let currSub = ""
+  let hash = {}
+  for(let i = 0; i < string.length; i++){
+    let letter = string[i]
+    if(hash[letter] >= 0 && hash[letter] < i){
+      if(mainP < hash[letter]){
+        mainP = hash[letter]
+        hash[letter] = i
+        i = mainP
+      }else {
+        let temp = i
+        i = mainP
+        mainP = temp
+        hash[letter] = temp
+      }
+      if(currSub.length >= result){
+        result = currSub
+      }
+      currSub = ""
+    }else {
+      hash[letter] = i
+      currSub += letter
+    }
+  }
+  return result
+}
+
+
+
+Second atempt
+
+
+
+function longestSubstringWithoutDuplication(string){
+  let startIdx = 0
+  let result = ""
+  let currSub = ""
+  let hash = {}
+  let idx = 0
+  while(idx < string.length){
+    let letter = string[idx]
+    if(hash[letter] >= 0 && hash[letter] < idx){
+    startIdx = Math.max(startIdx, hash[letter] + 1)
+    hash[letter] = idx
+    idx = startIdx
+    if(currSub.length >= result.length){
+      result = currSub
+    }
+    currSub = ""
+    }else {
+          hash[letter] = idx
+          currSub+= letter
+          idx++
+    }
+   
+  }
+  if(currSub.length  >= result.length){
+    result = currSub
+  }
+  
+  return result
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
